@@ -8,7 +8,7 @@
 import scrapy
 
 
-class CrawlerItem(scrapy.Item):
+class ProxyListItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    header = scrapy.Field()
     pass
