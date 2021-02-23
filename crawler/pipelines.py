@@ -11,18 +11,15 @@ import hashlib
 
 class CrawlerPipeline(object):
 
-    # def process_item(self, item, spider):
-    #     redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
-    #     key = hashlib.md5(item['host'] + item['port'])
-    #     redis_.hset('proxylist', key, json.dumps(item))
-    #     return item
-    def open_spider(self, spider):
-        self.file = open('items.jl', 'w')
+    redis_ = ''
 
-    def close_spider(self, spider):
-        self.file.close()
+    def open_spider(self, spider):
+        self.redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
     def process_item(self, item, spider):
-        line = json.dumps(dict(item)) + "\n"
-        self.file.write(line)
+        key = hashlib.md5(item['host'] + item['port'])
+        print(key)
+        print(1111111111111111111)
+        quit()
+        self.redis_.hset('proxylist', key, json.dumps(item))
         return item
