@@ -13,7 +13,7 @@ class CrawlerPipeline(object):
 
     redis_ = ''
 
-    def __init__(self, spider):
+    def __init__(self):
         self.redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
         print(self.redis_)
         quit()
