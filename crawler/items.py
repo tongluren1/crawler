@@ -18,4 +18,3 @@ class ProxyListItem(scrapy.Item):
     export_address = scrapy.Field()
     anonymity = scrapy.Field()
     port = scrapy.Field()
-    pass
