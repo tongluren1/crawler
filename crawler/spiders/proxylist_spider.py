@@ -26,7 +26,7 @@ class ProxyList(scrapy.Spider):
             item['export_address'] = obj_['export_address']
             item['anonymity'] = obj_['anonymity']
             item['port'] = obj_['port']
-            yield item
+            return item
 
         for page in next_pages:
             pass
