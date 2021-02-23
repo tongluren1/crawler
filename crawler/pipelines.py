@@ -17,7 +17,7 @@ class CrawlerPipeline(object):
         self.redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
     def process_item(self, item, spider):
-        key = hashlib.md5(item['host'] + item['port'])
+        key = hashlib.md5(str(item['host']) + str(item['port']))
         self.redis_.hset('proxylist', key, json.dumps(item))
         print(self.redis_)
         print(key)
