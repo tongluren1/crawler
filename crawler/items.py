@@ -10,5 +10,12 @@ import scrapy
 
 class ProxyListItem(scrapy.Item):
     # define the fields for your item here like:
-    header = scrapy.Field()
+    response_time = scrapy.Field()
+    country = scrapy.Field()
+    type = scrapy.Field()
+    fro = scrapy.Field()
+    host = scrapy.Field()
+    export_address = scrapy.Field()
+    anonymity = scrapy.Field()
+    port = scrapy.Field()
     pass
