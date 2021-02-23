@@ -22,8 +22,6 @@ class ProxyList(scrapy.Spider):
                 item['export_address'] = '-'.join(obj_['export_address'])
             else:
                 item['export_address'] = obj_['export_address']
-            print(obj_['export_address'])
-            quit()
             item['response_time'] = obj_['response_time']
             item['country'] = obj_['country']
             item['type'] = obj_['type']
