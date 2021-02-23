@@ -28,7 +28,6 @@ class ProxyList(scrapy.Spider):
             item['port'] = obj_['port']
             yield item
 
-        next_pages = response.css('a::attr(href)').extract()
         for page in next_pages:
             pass
             # if
