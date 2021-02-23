@@ -28,9 +28,6 @@ class ProxyList(scrapy.Spider):
             item['port'] = obj_['port']
             return item
 
-        for page in next_pages:
-            pass
-            # if
 
 
 
