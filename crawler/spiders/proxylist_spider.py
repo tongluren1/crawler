@@ -29,4 +29,4 @@ class ProxyList(scrapy.Spider):
             item['host'] = obj_['host']
             item['anonymity'] = obj_['anonymity']
             item['port'] = obj_['port']
-            return item
+            yield item
