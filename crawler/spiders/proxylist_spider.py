@@ -29,7 +29,7 @@ class ProxyList(scrapy.Spider):
         yield scrapy.Request(start_url_, self.parse)
 
     def parse(self, response):
-        if response.status_code == '200':
+        if response.status == '200':
             redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
             href_list = response.xpath('//a/@href').getall()
             for href in href_list:
