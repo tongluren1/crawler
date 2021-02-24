@@ -18,7 +18,7 @@ class ProxyList(scrapy.Spider):
         text = response.text.replace('}', '},')
         obj = json.loads('[' + text.strip().strip(',') + ']')
         for obj_ in obj:
-            if type(obj_['export_address']) == 'list':
+            if type(obj_['export_address']) == type([]):
                 item['export_address'] = '-'.join(obj_['export_address'])
             else:
                 item['export_address'] = obj_['export_address']
@@ -30,7 +30,3 @@ class ProxyList(scrapy.Spider):
             item['anonymity'] = obj_['anonymity']
             item['port'] = obj_['port']
             return item
-
-
-
-

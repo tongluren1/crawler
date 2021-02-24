@@ -18,10 +18,7 @@ class CrawlerPipeline(object):
 
     def process_item(self, item, spider):
         key = str(item['host']) + str(item['port'])
-        key = md5(key.encode("utf-8"))
-        self.redis_.hset('proxylist', key, json.dumps(item))
-        print(self.redis_)
-        print(key)
-        print(1111111111111111111)
-        quit()
+        key = md5(key.encode("utf-8")).hexdigest()
+        value = json.dumps(dict(item))
+        self.redis_.hset('proxylist', key, value)
         return item
