@@ -29,22 +29,23 @@ class ProxyList(scrapy.Spider):
         yield scrapy.Request(start_url_, self.parse)
 
     def parse(self, response):
-        redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
-        href_list = response.xpath('//a/@href').getall()
-        for href in href_list:
-            if href[0:2] == './' or href[0:2] == '/':
-                tmp_url_ = 'http://' + urlparse(response.request.url).netloc + '/' + href.strip('.').strip('/')
-            elif href[0:4] == 'http':
-                tmp_url_ = href
-            else:
-                tmp_url_ = False
-            if tmp_url_:
-                redis_.sadd('baidu_url', tmp_url_)
+        if response.status_code == '200':
+            redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
+            href_list = response.xpath('//a/@href').getall()
+            for href in href_list:
+                if href[0:2] == './' or href[0:2] == '/':
+                    tmp_url_ = 'http://' + urlparse(response.request.url).netloc + '/' + href.strip('.').strip('/')
+                elif href[0:4] == 'http':
+                    tmp_url_ = href
+                else:
+                    tmp_url_ = False
+                if tmp_url_:
+                    redis_.sadd('baidu_url', tmp_url_)
 
-        item = ProxyListItem()
-        item['url'] = response.request.url
-        item['title_text'] = response.xpath('//title/text()').get()
-        yield item
+            item = ProxyListItem()
+            item['url'] = response.request.url
+            item['title_text'] = response.xpath('//title/text()').get()
+            yield item
 
         next_url = redis_.spop('baidu_url')
         if not next_url is None:
