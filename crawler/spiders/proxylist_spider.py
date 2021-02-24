@@ -23,7 +23,7 @@ class ProxyList(scrapy.Spider):
 
     def start_requests(self):
         redis_ = redis.Redis(host='localhost', port=6379, decode_responses=True)
-        start_url_ = redis_.lpop('baidu_url')
+        start_url_ = redis_.spop('baidu_url')
         if start_url_ is None:
             start_url_ = 'http://top.baidu.com/buzz?b=1&fr=topindex'
         yield scrapy.Request(start_url_, self.parse)
@@ -39,14 +39,14 @@ class ProxyList(scrapy.Spider):
             else:
                 tmp_url_ = False
             if tmp_url_:
-                redis_.lpush('baidu_url', tmp_url_)
+                redis_.sadd('baidu_url', tmp_url_)
 
         item = ProxyListItem()
         item['url'] = response.request.url
         item['title_text'] = response.xpath('//title/text()').get()
         yield item
 
-        next_url = redis_.lpop('baidu_url')
+        next_url = redis_.spop('baidu_url')
         if not next_url is None:
             yield scrapy.Request(next_url, callback=self.parse, dont_filter=True)
         else:
